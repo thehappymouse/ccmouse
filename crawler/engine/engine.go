@@ -28,6 +28,5 @@ func Run(seeds ...Request) {
 			log.Warn("Got Item %v", item)
 		}
 		time.Sleep(time.Millisecond * 10)
-
 	}
 }

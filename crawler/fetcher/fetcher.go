@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"golang.org/x/text/transform"
 	"io/ioutil"
-	"io"
 	"bufio"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
@@ -21,14 +20,15 @@ func Fetch(url string) ([]byte, error)  {
 	if resp.StatusCode != 200 {
 		return nil, fmt.Errorf("抓取出错了, 返回码[%d]", resp.StatusCode)
 	}
-	utf8Reader := transform.NewReader(resp.Body, determineEncoding(resp.Body).NewDecoder())
+	bufBody := bufio.NewReader(resp.Body)
+	utf8Reader := transform.NewReader(bufBody, determineEncoding(bufBody).NewDecoder())
 	body, err := ioutil.ReadAll(utf8Reader)
 	return body, err
 }
 
 
-func determineEncoding(r io.Reader) encoding.Encoding {
-	data, err := bufio.NewReader(r).Peek(1024)
+func determineEncoding(r *bufio.Reader) encoding.Encoding {
+	data, err := r.Peek(1024)
 	if err != nil {
 		return unicode.UTF8
 	}
