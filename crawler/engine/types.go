@@ -10,7 +10,7 @@ type ParseResult struct {
 	Requests []Request
 	Items    []interface{}
 }
-
+// 空解析方法
 func NilParseFunc([]byte) ParseResult  {
 	return ParseResult{}
 }

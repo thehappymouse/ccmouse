@@ -6,14 +6,11 @@ import (
 	"time"
 )
 
-func Run(seeds ...Request) {
-	q := []Request{}
-	for _, r := range seeds {
-		q = append(q, r)
-	}
-	for len(q) > 0 {
-		r := q[0]
-		q = q[1:]
+func Run(queue ...Request) {
+
+	for len(queue) > 0 {
+		r := queue[0]
+		queue = queue[1:]
 
 		body, err := fetcher.Fetch(r.Url)
 		log.Warn("Fetching %s", r.Url)
@@ -22,11 +19,11 @@ func Run(seeds ...Request) {
 			continue
 		}
 
-		ps := r.ParseFunc(body)
-		q = append(q, ps.Requests...)
-		for _, item := range ps.Items {
-			log.Warn("Got Item %v", item)
+		results := r.ParseFunc(body)
+		queue = append(queue, results.Requests...)
+		for _, item := range results.Items {
+			log.Warn("Got Item:  %v", item)
 		}
-		time.Sleep(time.Millisecond * 10)
+		time.Sleep(time.Millisecond * 100)
 	}
 }

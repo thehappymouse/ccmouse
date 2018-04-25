@@ -26,7 +26,7 @@ func Fetch(url string) ([]byte, error)  {
 	return body, err
 }
 
-
+// 根据html的meta头，试图自动转换编码到utf8
 func determineEncoding(r *bufio.Reader) encoding.Encoding {
 	data, err := r.Peek(1024)
 	if err != nil {
