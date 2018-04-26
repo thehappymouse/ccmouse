@@ -3,6 +3,7 @@ package main
 import (
 	"dali.cc/ccmouse/crawler/engine"
 	"dali.cc/ccmouse/crawler/zhengai/parser"
+	"dali.cc/ccmouse/crawler/scheduler"
 )
 
 var (
@@ -10,8 +11,14 @@ var (
 )
 
 func main() {
-	engine.SimpleEngine{}.Run(engine.Request{
+	seed := engine.Request{
 		Url:       startUrl,
 		ParseFunc: parser.ParseCityList,
-	})
+	}
+	//e := engine.SimpleEngine{}
+	e := engine.ConcurrentEngine{
+		MaxWorkerCount: 200,
+		Scheduler: &scheduler.SimpleScheduler{},
+	}
+	e.Run(seed)
 }
