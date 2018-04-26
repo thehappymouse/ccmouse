@@ -10,7 +10,7 @@ var (
 )
 
 func main() {
-	engine.Run(engine.Request{
+	engine.SimpleEngine{}.Run(engine.Request{
 		Url:       startUrl,
 		ParseFunc: parser.ParseCityList,
 	})

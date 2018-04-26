@@ -1,12 +1,9 @@
 package model
 
-import "fmt"
-
 type Profile struct {
-	ID, Name, Heieght, Weight, Job, JobAddress string
-	Age                                        int
+	ID, Name, Height, Weight, Job, JobAddress, Edu, Child, Jiguan, Age ,Marriage string
 }
-
-func (p Profile) String() string {
-	return fmt.Sprintf("Age: %d", p.Age)
-}
+//
+//func (p Profile) String() string {
+//	return fmt.Sprintf("Age: %v, Height: %v", p.Age, p.Height)
+//}
