@@ -18,7 +18,8 @@ func main() {
 	//e := engine.SimpleEngine{}
 	e := engine.ConcurrentEngine{
 		MaxWorkerCount: 200,
-		Scheduler: &scheduler.QueuedScheduler{},
+		Scheduler: &scheduler.SimpleScheduler{},
+		//Scheduler: &scheduler.QueuedScheduler{},
 	}
 	e.Run(seed)
 }

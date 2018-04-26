@@ -2,6 +2,10 @@ package scheduler
 
 import "dali.cc/ccmouse/crawler/engine"
 
+// 队列版的并发请求
+// 一个请求队列，一个工作队列。
+// 两个队列准备成功后，将请求投到工作任务中。
+// 每一个工作协程，使用一个独立的输入通道
 type QueuedScheduler struct {
 	requestChan chan engine.Request
 	workerChan  chan chan engine.Request
@@ -17,8 +21,8 @@ func (s *QueuedScheduler) WorkerReady(w chan engine.Request) {
 	s.workerChan <- w
 }
 
-func (s *QueuedScheduler) ConfigMasterWorkerChan(chan engine.Request) {
-	panic("implement me")
+func (s *QueuedScheduler) GetWorkerChan() chan engine.Request {
+	return make(chan engine.Request)
 }
 
 func (s *QueuedScheduler) Run() {
