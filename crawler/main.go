@@ -11,15 +11,18 @@ var (
 )
 
 func main() {
-	seed := engine.Request{
-		Url:       startUrl,
-		ParseFunc: parser.ParseCityList,
+	//seed := engine.Request{
+	//	Url:       startUrl,
+	//	ParseFunc: parser.ParseCityList,
+	//}
+	beijingSeed := engine.Request{
+		Url:"http://www.zhenai.com/zhenghun/beijing",
+		ParseFunc:parser.ParseCity,
 	}
 	//e := engine.SimpleEngine{}
 	e := engine.ConcurrentEngine{
-		MaxWorkerCount: 200,
-		Scheduler: &scheduler.SimpleScheduler{},
-		//Scheduler: &scheduler.QueuedScheduler{},
+		MaxWorkerCount: 100,
+		Scheduler: &scheduler.QueuedScheduler{},
 	}
-	e.Run(seed)
+	e.Run(beijingSeed)
 }

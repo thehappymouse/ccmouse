@@ -1,6 +1,9 @@
 package engine
 
-import "github.com/gpmgo/gopm/modules/log"
+import (
+	"dali.cc/ccmouse/crawler/model"
+	"github.com/gpmgo/gopm/modules/log"
+)
 
 // 并发的引擎
 // 引擎将请求发送给调度器，调度器纷发给workers, workers的结果再返回给引擎
@@ -10,7 +13,7 @@ type ConcurrentEngine struct {
 	Scheduler
 }
 type Scheduler interface {
-	Submit(request ...Request)
+	Submit(request Request)
 	GetWorkerChan() chan Request
 
 	Run()
@@ -27,16 +30,29 @@ func (e *ConcurrentEngine) Run(seed ...Request) {
 	for i := 0; i < e.MaxWorkerCount; i++ {
 		e.createWorker(e.Scheduler.GetWorkerChan(), out, e.Scheduler)
 	}
+	for _, r := range seed {
+		if IsDuplicate(r.Url) {
+			continue
+		}
+		e.Scheduler.Submit(r)
+	}
 
-	e.Scheduler.Submit(seed...)
-	var count = 0
+	// 只打印用户
+	var profileCount = 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			count++
-			log.Warn("Got Item: #%d %v",count, item)
+			if _, ok := item.(model.Profile); ok {
+				profileCount++
+				log.Warn("Got Item: #%d %v", profileCount, item)
+			}
 		}
-		e.Scheduler.Submit(result.Requests...)
+		for _, r := range result.Requests {
+			if IsDuplicate(r.Url) {
+				continue
+			}
+			e.Scheduler.Submit(r)
+		}
 	}
 
 }

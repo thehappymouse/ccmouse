@@ -8,7 +8,7 @@ type SimpleEngine struct {
 
 }
 func (e *SimpleEngine) Run(queue ...Request) {
-
+	var count = 0
 	for len(queue) > 0 {
 		r := queue[0]
 		queue = queue[1:]
@@ -17,10 +17,16 @@ func (e *SimpleEngine) Run(queue ...Request) {
 		if err != nil {
 			continue
 		}
-
-		queue = append(queue, results.Requests...)
+		for _,r := range results.Requests {
+			if IsDuplicate(r.Url) {
+				continue
+			}
+			queue = append(queue, r)
+		}
+		//queue = append(queue, results.Requests...)
 		for _, item := range results.Items {
-			log.Warn("Got Item:  %v", item)
+			count++
+			log.Warn("Got Item: $%d %v",count, item)
 		}
 	}
 }

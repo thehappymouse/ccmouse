@@ -18,8 +18,10 @@ func TestParseProfile(t *testing.T) {
 		Age:"47岁",
 		Height: "170CM",
 		Marriage: "离异",
+		Income: "8001-12000元",
 		Edu:"大专",
 		Job:"其他职业",
+		Sex:"男",
 		Child: "有，我们住在一起",
 		JobAddress:"陕西宝鸡",
 	}

@@ -10,21 +10,21 @@ import (
 	"github.com/gpmgo/gopm/modules/log"
 )
 
-//ID, Name, Height, Weight, Job, JobAddress, Edu, Child, Jiguan, Age string
-
 var regexs = map[string]*regexp.Regexp{
 	"Age":        regexp.MustCompile(`<td><span class="label">年龄：</span>(.+)</td>`),
+	"Sex":        regexp.MustCompile(` <td><span class="label">性别：</span><span field="">(.+)</span></td>`),
 	"Height":     regexp.MustCompile(`<td><span class="label">身高：</span>(.+)</td>`),
 	"Marriage":   regexp.MustCompile(`<td><span class="label">婚况：</span>([^<]+)</td>`),
 	"Edu":        regexp.MustCompile(`<td><span class="label">学历：</span>(.+)</td>`),
 	"Job":        regexp.MustCompile(`<td><span class="label">职业：.*</span>([^<]+)</td>`),
 	"JobAddress": regexp.MustCompile(`<td><span class="label">工作地：</span>([^<]+)</td>`),
 	"Child":      regexp.MustCompile(`<td><span class="label">有.+孩子：</span>(.+)</td>`),
+	"Income":     regexp.MustCompile(`<td><span class="label">月收入：</span>([^<]+)</td>`),
 }
 
 func ParseProfile(contents []byte, name string) engine.ParseResult {
 	rs := engine.ParseResult{}
-	profile := model.Profile{Name:name}
+	profile := model.Profile{Name: name}
 
 	v := reflect.ValueOf(&profile).Elem()
 

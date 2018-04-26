@@ -18,7 +18,7 @@ func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
 	resp, err := http.Get(url)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {

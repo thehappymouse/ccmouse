@@ -11,10 +11,8 @@ type QueuedScheduler struct {
 	workerChan  chan chan engine.Request
 }
 
-func (s *QueuedScheduler) Submit(requests ...engine.Request) {
-	for _, r := range requests {
-		s.requestChan <- r
-	}
+func (s *QueuedScheduler) Submit(request engine.Request) {
+	s.requestChan <- request
 }
 
 func (s *QueuedScheduler) WorkerReady(w chan engine.Request) {
