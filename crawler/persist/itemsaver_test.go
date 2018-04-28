@@ -28,14 +28,16 @@ func TestSave(t *testing.T) {
 			JobAddress: "陕西宝鸡",
 		},
 	}
-	err := save(right)
-	// todo 这里有一个依赖，第三方的服务。
 	// 可以用 docker go client去启一个独立的服务进行测试吗？ 不是在真实的服务中
 	client, err := elastic.NewClient(elastic.SetSniff(false))
+	const el_index = "profiles_test"
+	err = save(client,el_index, right)
+	// todo 这里有一个依赖，第三方的服务。
+
 	if err != nil {
 		panic(err)
 	}
-	resp, err := client.Get().Index("profiles").
+	resp, err := client.Get().Index(el_index).
 		Type(right.Type).Id(right.Id).
 		Do(context.Background())
 	if err != nil {

@@ -5,32 +5,38 @@ import (
 	"context"
 	"log"
 	"dali.cc/ccmouse/crawler/engine"
+	"github.com/pkg/errors"
 )
 
-func ItemSaver() chan engine.Item {
-	ch := make(chan engine.Item)
+func ItemSaver(index string) (chan engine.Item, error) {
+	ch := make(chan engine.Item, 1024)
+	client, err := elastic.NewClient(elastic.SetSniff(false))
+	if err != nil {
+		return nil, err
+	}
+
 	go func() {
 		itemCount := 0
 		for item := range ch {
 			itemCount++
 			log.Printf("Item Saver: Got Item #%d: %v", itemCount, item)
-			err := save(item)
+			err := save(client, index, item)
 			if err != nil {
 				log.Printf("Item Saver: save error: %s", err)
 			}
 		}
 	}()
-	return ch
+	return ch, nil
 }
 
 // 返回存储的ID
-func save(item engine.Item) (error) {
-	client, err := elastic.NewClient(elastic.SetSniff(false))
-	if err != nil {
-		return  err
+func save(client *elastic.Client, index string, item engine.Item) (error) {
+
+	if  item.Type == "" {
+		return errors.New("item.type 不能为空")
 	}
-	_, err = client.Index().
-		Index("profiles").
+	_, err := client.Index().
+		Index(index).
 		Type(item.Type).
 		Id(item.Id).
 		BodyJson(item).Do(context.Background())

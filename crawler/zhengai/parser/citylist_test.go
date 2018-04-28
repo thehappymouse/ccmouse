@@ -11,7 +11,7 @@ func TestParseCityList(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	results := ParseCityList(body)
+	results := ParseCityList(body, "")
 
 	var expectedUrls = []string{
 		"http://www.zhenai.com/zhenghun/aba",

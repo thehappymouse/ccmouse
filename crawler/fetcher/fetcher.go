@@ -11,15 +11,21 @@ import (
 	"golang.org/x/text/encoding/unicode"
 	"time"
 )
+
 // 100毫秒执行一次请求
-var rateLimiter = time.Tick(100 * time.Millisecond)
+var rateLimiter = time.Tick(50 * time.Millisecond)
+
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
-	resp, err := http.Get(url)
+	req, _ := http.NewRequest(http.MethodGet, url, nil)
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
+	var httpClient = http.Client{}
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
+
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		return nil, fmt.Errorf("抓取出错了, 返回码[%d]", resp.StatusCode)

@@ -3,7 +3,7 @@ package model
 import "encoding/json"
 
 type Profile struct {
-	ID, Name, Height, Weight, Job, JobAddress string
+	Name, Height, Weight, Job, JobAddress string
 	Edu, Child, Jiguan, Age, Marriage         string
 	Sex                                       string
 	Income                                    string
@@ -15,7 +15,3 @@ func Map2Profile(o interface{}) Profile  {
 	json.Unmarshal(str, &p)
 	return p
 }
-//
-//func (p Profile) String() string {
-//	return fmt.Sprintf("Age: %v, Height: %v", p.Age, p.Height)
-//}

@@ -10,7 +10,7 @@ func TestParseCity(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	results := ParseCity(body)
+	results := ParseCity(body, "")
 
 	var expectedUrls = []string{
 		"http://album.zhenai.com/u/1861056016",

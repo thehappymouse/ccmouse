@@ -23,6 +23,13 @@ var regexs = map[string]*regexp.Regexp{
 }
 var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
 
+// 生成用户解析函数的函数
+func ProfileParser(name string) engine.ParserFunc   {
+	return func(body []byte, url string) engine.ParseResult {
+		return ParseProfile(body, url, name)
+	}
+}
+
 func ParseProfile(contents []byte, url, name string) engine.ParseResult {
 	rs := engine.ParseResult{}
 

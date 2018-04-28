@@ -5,8 +5,8 @@ package engine
 // 所有worker 引用一个源
 type ConcurrentEngine struct {
 	MaxWorkerCount int
-	Scheduler Scheduler
-	ItemChan chan Item
+	Scheduler      Scheduler
+	ItemChan       chan Item
 }
 type Scheduler interface {
 	Submit(request Request)
@@ -20,7 +20,7 @@ type Ready interface {
 }
 
 func (e *ConcurrentEngine) Run(seed ...Request) {
-	out := make(chan ParseResult)
+	out := make(chan ParseResult, 1024)
 	e.Scheduler.Run()
 
 	for i := 0; i < e.MaxWorkerCount; i++ {
@@ -37,7 +37,7 @@ func (e *ConcurrentEngine) Run(seed ...Request) {
 		result := <-out
 		for _, item := range result.Items {
 			//log.Warn("Got Item: #%d %v", itemCount, item)
-			go func() {e.ItemChan <- item}()
+			go func() { e.ItemChan <- item }()
 		}
 		for _, r := range result.Requests {
 			if IsDuplicate(r.Url) {

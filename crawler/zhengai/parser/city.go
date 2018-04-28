@@ -11,20 +11,15 @@ var (
 	cityUrlRe  = regexp.MustCompile(`href="(http://www.zhenai.com/zhenghun/[^"]+)`)
 )
 
-func ParseCity(contents []byte) engine.ParseResult {
+func ParseCity(contents []byte, _ string) engine.ParseResult {
 	rs := engine.ParseResult{}
 
 	match := profileRe.FindAllSubmatch(contents, -1)
 
 	for _, m := range match {
-		name := string(m[2])
-		url := string(m[1])
-		//rs.Items = append(rs.Items, "User " + name)
 		rs.Requests = append(rs.Requests, engine.Request{
-			Url:       url,
-			ParseFunc: func(bytes []byte) engine.ParseResult {
-				return ParseProfile(bytes, url, name)
-			},
+			Url:       string(m[1]),
+			ParseFunc: ProfileParser(string(m[2])),
 		})
 	}
 	// 取本页面其它城市链接
