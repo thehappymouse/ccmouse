@@ -7,7 +7,6 @@ import (
 	"regexp"
 	"dali.cc/ccmouse/crawler/model"
 	"reflect"
-	"github.com/gpmgo/gopm/modules/log"
 )
 
 var regexs = map[string]*regexp.Regexp{
@@ -18,7 +17,7 @@ var regexs = map[string]*regexp.Regexp{
 	"Edu":        regexp.MustCompile(`<td><span class="label">学历：</span>(.+)</td>`),
 	"Job":        regexp.MustCompile(`<td><span class="label">职业：.*</span>([^<]+)</td>`),
 	"JobAddress": regexp.MustCompile(`<td><span class="label">工作地：</span>([^<]+)</td>`),
-	"Child":      regexp.MustCompile(`<td><span class="label">有.+孩子：</span>(.+)</td>`),
+	"HasChild":      regexp.MustCompile(`<td><span class="label">有无孩子：</span>(.+)</td>`),
 	"Income":     regexp.MustCompile(`<td><span class="label">月收入：</span>([^<]+)</td>`),
 }
 var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
@@ -45,7 +44,7 @@ func ParseProfile(contents []byte, url, name string) engine.ParseResult {
 				a.Set(reflect.ValueOf(s))
 			}
 		} else {
-			log.Warn("未能解析的属性：%s", k)
+			//log.Warn("未能解析的属性：%s", k)
 		}
 	}
 	item := engine.Item{

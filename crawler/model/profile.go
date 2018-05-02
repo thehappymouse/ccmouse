@@ -4,9 +4,9 @@ import "encoding/json"
 
 type Profile struct {
 	Name, Height, Weight, Job, JobAddress string
-	Edu, Child, Jiguan, Age, Marriage         string
-	Sex                                       string
-	Income                                    string
+	Edu, HasChild, Jiguan, Age, Marriage  string
+	Sex                                   string
+	Income                                string
 }
 // todo Map 转 Struce
 func Map2Profile(o interface{}) Profile  {

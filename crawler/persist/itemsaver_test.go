@@ -24,14 +24,14 @@ func TestSave(t *testing.T) {
 			Edu:        "大专",
 			Job:        "其他职业",
 			Sex:        "男",
-			Child:      "有，我们住在一起",
+			HasChild:   "有，我们住在一起",
 			JobAddress: "陕西宝鸡",
 		},
 	}
 	// 可以用 docker go client去启一个独立的服务进行测试吗？ 不是在真实的服务中
 	client, err := elastic.NewClient(elastic.SetSniff(false))
 	const el_index = "profiles_test"
-	err = save(client,el_index, right)
+	err = Save(client,el_index, right)
 	// todo 这里有一个依赖，第三方的服务。
 
 	if err != nil {

@@ -20,9 +20,9 @@ func ItemSaver(index string) (chan engine.Item, error) {
 		for item := range ch {
 			itemCount++
 			log.Printf("Item Saver: Got Item #%d: %v", itemCount, item)
-			err := save(client, index, item)
+			err := Save(client, index, item)
 			if err != nil {
-				log.Printf("Item Saver: save error: %s", err)
+				log.Printf("Item Saver: Save error: %s", err)
 			}
 		}
 	}()
@@ -30,7 +30,7 @@ func ItemSaver(index string) (chan engine.Item, error) {
 }
 
 // 返回存储的ID
-func save(client *elastic.Client, index string, item engine.Item) (error) {
+func Save(client *elastic.Client, index string, item engine.Item) (error) {
 
 	if  item.Type == "" {
 		return errors.New("item.type 不能为空")
@@ -40,8 +40,5 @@ func save(client *elastic.Client, index string, item engine.Item) (error) {
 		Type(item.Type).
 		Id(item.Id).
 		BodyJson(item).Do(context.Background())
-	if err != nil {
-		return  err
-	}
-	return  nil
+	return err
 }

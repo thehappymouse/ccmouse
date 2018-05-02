@@ -28,7 +28,7 @@ func TestParseProfile(t *testing.T) {
 			Edu:        "大专",
 			Job:        "其他职业",
 			Sex:        "男",
-			Child:      "有，我们住在一起",
+			HasChild:   "有，我们住在一起",
 			JobAddress: "陕西宝鸡",
 		},
 	}
