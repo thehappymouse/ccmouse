@@ -32,10 +32,11 @@ func (e *ConcurrentEngine) Run(seed ...Request) {
 		}
 		e.Scheduler.Submit(r)
 	}
-
+	//itemCount := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
+			//itemCount++
 			//log.Warn("Got Item: #%d %v", itemCount, item)
 			go func() { e.ItemChan <- item }()
 		}

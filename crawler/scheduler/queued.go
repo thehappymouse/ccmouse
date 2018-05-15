@@ -45,7 +45,6 @@ func (s *QueuedScheduler) Run() {
 			case activeWorker <- activeRequest:
 				requestQ = requestQ[1:]
 				workerQ = workerQ[1:]
-
 			}
 		}
 	}()

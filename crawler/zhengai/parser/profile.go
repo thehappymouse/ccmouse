@@ -17,17 +17,10 @@ var regexs = map[string]*regexp.Regexp{
 	"Edu":        regexp.MustCompile(`<td><span class="label">学历：</span>(.+)</td>`),
 	"Job":        regexp.MustCompile(`<td><span class="label">职业：.*</span>([^<]+)</td>`),
 	"JobAddress": regexp.MustCompile(`<td><span class="label">工作地：</span>([^<]+)</td>`),
-	"HasChild":      regexp.MustCompile(`<td><span class="label">有无孩子：</span>(.+)</td>`),
+	"HasChild":   regexp.MustCompile(`<td><span class="label">有无孩子：</span>(.+)</td>`),
 	"Income":     regexp.MustCompile(`<td><span class="label">月收入：</span>([^<]+)</td>`),
 }
 var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
-
-// 生成用户解析函数的函数
-func ProfileParser(name string) engine.ParserFunc   {
-	return func(body []byte, url string) engine.ParseResult {
-		return ParseProfile(body, url, name)
-	}
-}
 
 func ParseProfile(contents []byte, url, name string) engine.ParseResult {
 	rs := engine.ParseResult{}
@@ -51,7 +44,7 @@ func ParseProfile(contents []byte, url, name string) engine.ParseResult {
 		Url:     url,
 		Payload: profile,
 		Type:    "zhenai",
-		Id: extractString([]byte(url), idUrlRe),
+		Id:      extractString([]byte(url), idUrlRe),
 	}
 	rs.Items = []engine.Item{item}
 	return rs
@@ -63,5 +56,30 @@ func extractString(c []byte, r *regexp.Regexp) string {
 		return string(match[1])
 	} else {
 		return ""
+	}
+}
+
+// 生成用户解析函数的函数
+//func ProfileParser(name string) engine.ParserFunc   {
+//	return func(body []byte, url string) engine.ParseResult {
+//		return ParseProfile(body, url, name)
+//	}
+//}
+
+type ProfileParser struct {
+	userName string
+}
+
+func (p *ProfileParser) Parse(contents []byte, url string) engine.ParseResult {
+	return ParseProfile(contents, url, p.userName)
+}
+
+func (p *ProfileParser) Serialize() (name string, args interface{}) {
+	return "ProfileParser", p.userName
+}
+
+func NewProfileParser(name string) *ProfileParser {
+	return &ProfileParser{
+		userName: name,
 	}
 }

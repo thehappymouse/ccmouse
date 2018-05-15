@@ -12,6 +12,6 @@ func worker (r Request) (ParseResult, error) {
 		log.Error("请求[%s]失败：%s", r.Url, err)
 		return ParseResult{}, err
 	}
-
-	return r.ParseFunc(body, r.Url), nil
+	return r.Parse.Parse(body,r.Url), nil
+	//return r.ParseFunc(body, r.Url), nil
 }
