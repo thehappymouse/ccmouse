@@ -13,7 +13,7 @@ func TestParseProfile(t *testing.T) {
 		panic(err)
 	}
 	url := "http://album.zhenai.com/u/1077868794"
-	results := ProfileParser("冰之泪")(body, url)
+	results := NewProfileParser("冰之泪").Parse(body, url)
 	profile := results.Items[0]
 	right := engine.Item{
 		Url:  url,
