@@ -18,16 +18,16 @@ func ParseCity(contents []byte, _ string) engine.ParseResult {
 
 	for _, m := range match {
 		rs.Requests = append(rs.Requests, engine.Request{
-			Url:       string(m[1]),
-			ParseFunc: ProfileParser(string(m[2])),
+			Url:    string(m[1]),
+			Parser: NewProfileParser(string(m[2])),
 		})
 	}
 	// 取本页面其它城市链接
 	match = cityUrlRe.FindAllSubmatch(contents, -1)
 	for _, m := range match {
 		rs.Requests = append(rs.Requests, engine.Request{
-			Url: string(m[1]),
-			ParseFunc: ParseCity,
+			Url:    string(m[1]),
+			Parser: engine.NewFuncParser(ParseCity, "ParseCity"),
 		})
 	}
 	return rs

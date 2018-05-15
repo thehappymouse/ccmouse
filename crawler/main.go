@@ -16,16 +16,8 @@ func main() {
 
 	seed = []engine.Request{
 		{
-			Url:       "http://www.zhenai.com/zhenghun/beijing",
-			ParseFunc: parser.ParseCity,
-		},
-		{
-			Url:       "http://www.zhenai.com/zhenghun/henan",
-			ParseFunc: parser.ParseCity,
-		},
-		{
-			Url:       "http://www.zhenai.com/zhenghun",
-			ParseFunc: parser.ParseCityList,
+			Url:    "http://www.zhenai.com/zhenghun/beijing",
+			Parser: engine.NewFuncParser(parser.ParseCity, "ParseCity"),
 		},
 	}
 	//e := engine.SimpleEngine{}
