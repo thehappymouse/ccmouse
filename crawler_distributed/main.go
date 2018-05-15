@@ -9,10 +9,12 @@ import (
 )
 
 func main() {
+
 	itemChan, err := client.ItemSaver(config.ItemSaverPort)
 	if err != nil {
 		panic(err)
 	}
+
 	var seed []engine.Request
 
 	seed = []engine.Request{
@@ -20,14 +22,14 @@ func main() {
 			Url:       "http://www.zhenai.com/zhenghun/beijing",
 			ParseFunc: parser.ParseCity,
 		},
-		//{
-		//	Url:       "http://www.zhenai.com/zhenghun/henan",
-		//	ParseFunc: parser.ParseCity,
-		//},
-		//{
-		//	Url:       "http://www.zhenai.com/zhenghun",
-		//	ParseFunc: parser.ParseCityList,
-		//},
+		{
+			Url:       "http://www.zhenai.com/zhenghun/henan",
+			ParseFunc: parser.ParseCity,
+		},
+		{
+			Url:       "http://www.zhenai.com/zhenghun",
+			ParseFunc: parser.ParseCityList,
+		},
 	}
 	//e := engine.SimpleEngine{}
 	e := engine.ConcurrentEngine{
