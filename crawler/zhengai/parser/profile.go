@@ -22,6 +22,7 @@ var regexs = map[string]*regexp.Regexp{
 }
 var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
 
+
 func ParseProfile(contents []byte, url, name string) engine.ParseResult {
 	rs := engine.ParseResult{}
 
@@ -47,6 +48,18 @@ func ParseProfile(contents []byte, url, name string) engine.ParseResult {
 		Id:      extractString([]byte(url), idUrlRe),
 	}
 	rs.Items = []engine.Item{item}
+
+	// 取本页面内，猜你喜欢的的
+	var guessRe = regexp.MustCompile(`href="(http://album.zhenai.com/u/\w+)"[^>]*>([^<]+)</a>`)
+	ms := guessRe.FindAllSubmatch(contents, -1)
+	for _, m := range ms {
+		rs.Requests = append(rs.Requests, engine.Request{
+			Url:   string(m[1]),
+			Parse:  NewProfileParser(string(m[2])),
+		})
+	}
+
+	// 取本页面其它城市链接
 	return rs
 }
 
