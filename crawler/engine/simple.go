@@ -13,7 +13,7 @@ func (e *SimpleEngine) Run(queue ...Request) {
 		r := queue[0]
 		queue = queue[1:]
 
-		results, err := worker(r)
+		results, err := Worker(r)
 		if err != nil {
 			continue
 		}

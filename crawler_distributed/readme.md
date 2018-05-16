@@ -13,4 +13,4 @@ saver分离
 
 解析器的RPC, 难点在于解析器函数的序列化和反序列化
 
-
+把 Work里的 parserfunc转换成 Parsr接口

@@ -5,7 +5,7 @@ import (
 	"github.com/gpmgo/gopm/modules/log"
 )
 
-func worker (r Request) (ParseResult, error) {
+func Worker(r Request) (ParseResult, error) {
 	body, err := fetcher.Fetch(r.Url)
 	//log.Warn("Fetching %s", r.Url)
 	if err != nil {
