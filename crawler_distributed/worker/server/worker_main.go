@@ -6,10 +6,16 @@ import (
 	"fmt"
 	"dali.cc/ccmouse/crawler_distributed/config"
 	"dali.cc/ccmouse/crawler_distributed/worker"
+	"flag"
 )
 
+var port = flag.Int("port", config.WorkerPort0, "请输入工作端口号(默认10086）")
+
 func main() {
-	port := fmt.Sprintf(":%d", config.WorkerPort0)
-	log.Fatal(rpcsupport.ServeRpc(port,
+	flag.Parse()
+	port2 := fmt.Sprintf(":%d", *port)
+
+	fmt.Println("Worker Server Start At:", port2)
+	log.Fatal(rpcsupport.ServeRpc(port2,
 		worker.CrawlService{}))
 }
