@@ -4,13 +4,19 @@ import (
 	"dali.cc/ccmouse/crawler/engine"
 	"dali.cc/ccmouse/crawler/scheduler"
 	"dali.cc/ccmouse/crawler/zhengai/parser"
-	"dali.cc/ccmouse/crawler_distributed/persist/client"
+	itemsaver "dali.cc/ccmouse/crawler_distributed/persist/client"
 	"dali.cc/ccmouse/crawler_distributed/config"
+	worker "dali.cc/ccmouse/crawler_distributed/worker/client"
 )
 
 func main() {
 
-	itemChan, err := client.ItemSaver(config.ItemSaverPort)
+	itemChan, err := itemsaver.ItemSaver(config.ItemSaverPort)
+	if err != nil {
+		panic(err)
+	}
+
+	processor, err := worker.CreateProcessor()
 	if err != nil {
 		panic(err)
 	}
@@ -19,23 +25,17 @@ func main() {
 
 	seed = []engine.Request{
 		{
-			Url:    "http://www.zhenai.com/zhenghun/beijing",
-			Parser: parser.ParseCity,
-		},
-		{
-			Url:    "http://www.zhenai.com/zhenghun/henan",
-			Parser: parser.ParseCity,
-		},
-		{
-			Url:    "http://www.zhenai.com/zhenghun",
-			Parser: parser.ParseCityList,
+			Url:   "http://www.zhenai.com/zhenghun/beijing",
+			Parse: engine.NewFuncParser(parser.ParseCity, "ParseCity"),
 		},
 	}
-	//e := engine.SimpleEngine{}
+
 	e := engine.ConcurrentEngine{
 		MaxWorkerCount: 200,
 		Scheduler:      &scheduler.QueuedScheduler{},
 		ItemChan:       itemChan,
+		//RequestWorker:  engine.Worker,
+		RequestWorker: processor,
 	}
 	e.Run(seed...)
 }

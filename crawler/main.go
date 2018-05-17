@@ -7,6 +7,7 @@ import (
 	"dali.cc/ccmouse/crawler/zhengai/parser"
 )
 
+// 单机，并发
 func main() {
 	itemChan, err := persist.ItemSaver("profiles")
 	if err != nil {
@@ -30,9 +31,10 @@ func main() {
 	}
 	//e := engine.SimpleEngine{}
 	e := engine.ConcurrentEngine{
-		MaxWorkerCount: 100,
-		Scheduler:      &scheduler.QueuedScheduler{},
-		ItemChan:       itemChan,
+		MaxWorkerCount:   100,
+		Scheduler:        &scheduler.QueuedScheduler{},
+		ItemChan:         itemChan,
+		RequestWorker: engine.Worker,
 	}
 	e.Run(seed...)
 }

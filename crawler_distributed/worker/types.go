@@ -61,13 +61,13 @@ func deserializeParser(p SerializedParser) (engine.Parser, error) {
 	}
 }
 func DeserializeRequest(r Request) (engine.Request, error) {
-	parser, err := deserializeParser(r.Parser)
+	parse, err := deserializeParser(r.Parser)
 	if err != nil {
 		return engine.Request{}, err
 	}
 	req := engine.Request{
 		Url:   r.Url,
-		Parse: parser,
+		Parse: parse,
 	}
 	return req, nil
 }

@@ -7,7 +7,9 @@ type ConcurrentEngine struct {
 	MaxWorkerCount int
 	Scheduler      Scheduler
 	ItemChan       chan Item
+	RequestWorker Processor
 }
+type Processor func(request Request) (ParseResult, error)
 type Scheduler interface {
 	Submit(request Request)
 	GetWorkerChan() chan Request
@@ -50,12 +52,11 @@ func (e *ConcurrentEngine) Run(seed ...Request) {
 
 }
 func (e *ConcurrentEngine) createWorker(in chan Request, out chan ParseResult, s Ready) {
-
 	go func() {
 		for {
 			s.WorkerReady(in)
 			request := <-in
-			result, err := Worker(request)
+			result, err := e.RequestWorker(request)
 			if err != nil {
 				continue
 			}
