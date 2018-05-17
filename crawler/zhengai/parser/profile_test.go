@@ -13,8 +13,9 @@ func TestParseProfile(t *testing.T) {
 		panic(err)
 	}
 	url := "http://album.zhenai.com/u/1077868794"
-	results := ProfileParser("冰之泪")(body, url)
-	profile := results.Items[0]
+	result := NewProfileParser("冰之泪").Parse(body, url)
+
+	profile := result.Items[0]
 	right := engine.Item{
 		Url:  url,
 		Id:   "1077868794",
@@ -34,5 +35,8 @@ func TestParseProfile(t *testing.T) {
 	}
 	if profile != right {
 		t.Errorf("不相同的会员信息: \n %v : \n %v", profile, right)
+	}
+	if len(result.Requests) == 0 {
+		t.Errorf("猜你喜欢，不应该为空")
 	}
 }

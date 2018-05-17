@@ -6,9 +6,11 @@ import (
 	"dali.cc/ccmouse/crawler_distributed/persist"
 	"log"
 	"dali.cc/ccmouse/crawler_distributed/config"
+	"fmt"
 )
 
 func main() {
+	fmt.Println("Imte Saver Start At:", config.ItemSaverPort)
 	log.Fatal(serveRpc(config.ItemSaverPort, config.ElasticIndex))
 }
 // 启动一个 存储节点

@@ -1,0 +1,16 @@
+tree
+small.in
+.DS_Store
+.idea/
+basic/
+errorhandling/
+fileserver/
+funcational/
+goroutinue/
+lintcode/
+main
+main.go
+map1/
+maze/
+retriever/
+slice/

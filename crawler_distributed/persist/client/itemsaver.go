@@ -11,7 +11,6 @@ func ItemSaver(host string) (chan engine.Item, error) {
 	ch := make(chan engine.Item, 1024)
 
 	rpc, err := rpcsupport.NewClient(host)
-
 	go func() {
 		itemCount := 0
 		for item := range ch {
@@ -26,5 +25,5 @@ func ItemSaver(host string) (chan engine.Item, error) {
 			}
 		}
 	}()
-	return ch, nil
+	return ch, err
 }

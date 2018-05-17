@@ -1,15 +1,16 @@
 package engine
 
-// 解析器接口，支持序列化
+type ParserFunc func(body []byte, url string) ParseResult
+
 type Parser interface {
-	Parse(body []byte, url string) ParseResult
+	Parse(contents []byte, url string) ParseResult
 	Serialize() (name string, args interface{})
 }
 
 // 请求，包括URL和指定的解析函数
 type Request struct {
-	Url    string
-	Parser Parser
+	Url   string
+	Parse Parser
 }
 
 // 解析结果
@@ -19,7 +20,7 @@ type ParseResult struct {
 }
 
 // 空解析方法
-func NilParseFunc([]byte) ParseResult {
+func NilParseFunc(body []byte, url string) ParseResult {
 	return ParseResult{}
 }
 
@@ -31,35 +32,32 @@ type Item struct {
 	Payload interface{}
 }
 
-// 空解析器
-type NilParser struct {
+type NilParse struct {
 }
 
-func (NilParser) Parse(body []byte, url string) ParseResult {
+func (NilParse) Parse(contents []byte, url string) ParseResult {
 	return ParseResult{}
 }
 
-func (NilParser) Serialize() (name string, args interface{}) {
-	return "NilParser", nil
+func (NilParse) Serialize() (name string, args interface{}) {
+	return "NilParse", nil
 }
 
-// 将函数包装成触解析器
-type ParserFunc func(body []byte, url string) ParseResult
-type FuncParse struct {
+type FuncParser struct {
 	parser ParserFunc
 	name   string
 }
 
-func (f *FuncParse) Parse(body []byte, url string) ParseResult {
-	return f.Parse(body, url)
+func (p *FuncParser) Parse(contents []byte, url string) ParseResult {
+	return p.parser(contents, url)
 }
 
-func (f *FuncParse) Serialize() (name string, args interface{}) {
-	return f.name, nil
+func (p *FuncParser) Serialize() (name string, args interface{}) {
+	return p.name, nil
 }
 
-func NewFuncParser(p ParserFunc, name string) *FuncParse {
-	return &FuncParse{
+func NewFuncParser(p ParserFunc, name string) *FuncParser {
+	return &FuncParser{
 		parser: p,
 		name:   name,
 	}
