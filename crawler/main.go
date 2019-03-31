@@ -2,17 +2,30 @@ package main
 
 import (
 	"dali.cc/ccmouse/crawler/engine"
-	"dali.cc/ccmouse/crawler/scheduler"
-	"dali.cc/ccmouse/crawler/persist"
+	parser2 "dali.cc/ccmouse/crawler/tieba/parser"
 	"dali.cc/ccmouse/crawler/zhengai/parser"
 )
 
-// 单机，并发
-func main() {
-	itemChan, err := persist.ItemSaver("profiles")
-	if err != nil {
-		panic(err)
+
+func tieBa() {
+
+	var seed []engine.Request
+
+	seed = []engine.Request{
+		{
+			Url:   "http://tieba.baidu.com/p/5571119322",
+			Parse: parser2.NewPostParser("first"),
+		},
 	}
+	e := engine.SimpleEngine{}	//单机
+	e.Run(seed...)
+}
+
+func zhenai()  {
+	//itemChan, err := persist.ItemSaver("profiles")
+	//if err != nil {
+	//	panic(err)
+	//}
 	var seed []engine.Request
 
 	seed = []engine.Request{
@@ -29,12 +42,17 @@ func main() {
 		//	Parse: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
 		//},
 	}
-	//e := engine.SimpleEngine{}
-	e := engine.ConcurrentEngine{
-		MaxWorkerCount:   100,
-		Scheduler:        &scheduler.QueuedScheduler{},
-		ItemChan:         itemChan,
-		RequestWorker: engine.Worker,
-	}
+	e := engine.SimpleEngine{}	//单机
+	//e := engine.ConcurrentEngine{
+	//	MaxWorkerCount:   100,
+	//	Scheduler:        &scheduler.QueuedScheduler{},
+	//	ItemChan:         itemChan,
+	//	RequestWorker: engine.Worker,
+	//}
 	e.Run(seed...)
+}
+
+// 单机，并发
+func main() {
+	tieBa()
 }
