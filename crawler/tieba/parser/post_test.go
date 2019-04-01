@@ -12,7 +12,7 @@ func TestParseProfile(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	url := "http://tieba.baidu.com/p/4639254365"
+	url := "http://tieba.baidu.com/p/4639254365?pn=9"
 	result := NewPostParser("冰之泪").Parse(body, url)
 
 	profile := result.Items[0]

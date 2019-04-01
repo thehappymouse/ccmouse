@@ -16,6 +16,14 @@ func tieBa() {
 			Url:   "http://tieba.baidu.com/p/5571119322",
 			Parse: parser2.NewPostParser("first"),
 		},
+		{
+			Url:   "http://tieba.baidu.com/p/5002958965",
+			Parse: parser2.NewPostParser("two"),
+		},
+		{
+			Url:   "https://tieba.baidu.com/p/4575246659",
+			Parse: parser2.NewPostParser("three"),
+		},
 	}
 	e := engine.SimpleEngine{}	//单机
 	e.Run(seed...)

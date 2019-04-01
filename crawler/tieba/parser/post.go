@@ -5,6 +5,7 @@ package parser
 import (
 	"bytes"
 	"dali.cc/ccmouse/crawler/engine"
+	html2 "dali.cc/utils/html"
 	model2 "dali.cc/ccmouse/crawler/tieba/model"
 	"dali.cc/utils"
 	"github.com/rs/zerolog/log"
@@ -16,9 +17,12 @@ import (
 )
 
 var nextPageReg = regexp.MustCompile(`<a href="(.+)">下一页</a>`)
-var idReg = regexp.MustCompile(`http://tieba.baidu.com/p/(.+)\?pn=(.+)`)
-var id1Reg = regexp.MustCompile(`http://tieba.baidu.com/p/(.+)`)
+var idReg = regexp.MustCompile(`http://tieba.baidu.com/p/(\d+)\?pn=(\d+)`)
+var id1Reg = regexp.MustCompile(`http://tieba.baidu.com/p/(\d+)`)
+var titleReg = regexp.MustCompile(`<h1 class="core_title_txt  " title=".*" style="width: 470px">(.*)</h1>`)
 
+// 贴子的ID
+var post_id string
 func visitFloor(fs []model2.Floor, n *html.Node) []model2.Floor {
 	if n.Type == html.ElementNode && n.Data == "div" {
 		for _, a := range n.Attr {
@@ -42,10 +46,11 @@ func visitContent(text []string, n *html.Node) []string {
 			if a.Key == "class" && a.Val == "d_post_content j_d_post_content  clearfix" { //直接得内容
 				for d := n.FirstChild; d != nil; d = d.NextSibling {
 					if d.Data == "img" {
-						// todo 下载图片
-						src := getNodeVal("src", d)
-						utils.DownLoadImgToDir(src, "tieba_img")
-						setNodeVal("src", "tieba_img/" + path.Base(src), d)
+						if ok, src := html2.GetNodeVal("src", d); ok {
+							target := "tieba_img/" + post_id
+							utils.DownLoadImgToDir(src, "tieba_result/" +target)
+							html2.SetNodeVal("src", target + "/" + path.Base(src), d)
+						}
 					}
 					text = append(text, d.Data)
 				}
@@ -61,30 +66,15 @@ func visitContent(text []string, n *html.Node) []string {
 	return text
 }
 
-func getNodeVal(key string, n *html.Node) string {
-	for _, a := range n.Attr {
-		if a.Key == key {
-			return a.Val
-		}
-	}
-	return ""
-}
-func setNodeVal(key, val string, n *html.Node) bool {
-	for index, a := range n.Attr {
-		if a.Key == key {
-			n.Attr[index].Val = val
-			return true
-		}
-	}
-	return false
-}
 
 func ParsePost(contents []byte, url, name string) engine.ParseResult {
 	rs := engine.ParseResult{}
 	post := model2.Post{Title: name}
-	id := extractString([]byte(url), idReg)
-	if (id == "") {
-		id = extractString([]byte(url), id1Reg)
+	title := extractString(contents, titleReg)
+	page_id := extractString([]byte(url), idReg)
+	post_id = extractString([]byte(url), id1Reg)
+	if (page_id == "") {
+		page_id = post_id
 	}
 	doc, err := html.Parse(bytes.NewReader(contents))
 
@@ -93,8 +83,9 @@ func ParsePost(contents []byte, url, name string) engine.ParseResult {
 	}
 	post.Floors = visitFloor(post.Floors, doc)
 
-	f, err := os.Create(id + ".html")
+	f, err := os.Create("tieba_result/" + title + page_id + ".html")
 	defer f.Close()
+
 	if err != nil {
 		log.Printf("%s 创建失败: %s", url, err)
 	}
@@ -124,7 +115,7 @@ func ParsePost(contents []byte, url, name string) engine.ParseResult {
 func extractString(c []byte, r *regexp.Regexp) string {
 	match := r.FindSubmatch(c)
 	if match != nil && len(match) >= 2 {
-		return string(bytes.Join(match[1:], []byte{0x65} ))
+		return string(bytes.Join(match[1:], []byte{'_'} ))
 	} else {
 		return ""
 	}
