@@ -2,7 +2,7 @@ package main
 
 import (
 	"dali.cc/ccmouse/crawler/engine"
-	parser2 "dali.cc/ccmouse/crawler/tieba/parser"
+	parser2 "dali.cc/crawler_tieba/parser"
 	"dali.cc/ccmouse/crawler/zhengai/parser"
 )
 
