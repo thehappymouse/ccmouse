@@ -10,6 +10,7 @@ type ConcurrentEngine struct {
 	RequestWorker Processor
 }
 type Processor func(request Request) (ParseResult, error)
+
 type Scheduler interface {
 	Submit(request Request)
 	GetWorkerChan() chan Request
@@ -17,6 +18,7 @@ type Scheduler interface {
 	Run()
 	Ready
 }
+
 type Ready interface {
 	WorkerReady(chan Request)
 }

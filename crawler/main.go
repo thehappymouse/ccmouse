@@ -2,34 +2,11 @@ package main
 
 import (
 	"dali.cc/ccmouse/crawler/engine"
-	parser2 "dali.cc/crawler_tieba/parser"
 	"dali.cc/ccmouse/crawler/zhengai/parser"
 )
 
-
-func tieBa() {
-
-	var seed []engine.Request
-
-	seed = []engine.Request{
-		{
-			Url:   "http://tieba.baidu.com/p/5571119322",
-			Parse: parser2.NewPostParser("first"),
-		},
-		{
-			Url:   "http://tieba.baidu.com/p/5002958965",
-			Parse: parser2.NewPostParser("two"),
-		},
-		{
-			Url:   "https://tieba.baidu.com/p/4575246659",
-			Parse: parser2.NewPostParser("three"),
-		},
-	}
-	e := engine.SimpleEngine{}	//单机
-	e.Run(seed...)
-}
-
-func zhenai()  {
+// 单机，并发
+func main() {
 	//itemChan, err := persist.ItemSaver("profiles")
 	//if err != nil {
 	//	panic(err)
@@ -58,9 +35,4 @@ func zhenai()  {
 	//	RequestWorker: engine.Worker,
 	//}
 	e.Run(seed...)
-}
-
-// 单机，并发
-func main() {
-	tieBa()
 }

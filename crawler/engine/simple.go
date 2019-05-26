@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/gpmgo/gopm/modules/log"
+	"github.com/rs/zerolog/log"
 )
 
 // 单任务版引擎
@@ -27,7 +27,7 @@ func (e *SimpleEngine) Run(queue ...Request) {
 		//queue = append(queue, results.Requests...)
 		for _, item := range results.Items {
 			count++
-			log.Warn("Got Item: $%d %v", count, item)
+			log.Info().Msgf("Got Item: $%d %v", count, item)
 		}
 	}
 }

@@ -43,6 +43,7 @@ func (NilParse) Serialize() (name string, args interface{}) {
 	return "NilParse", nil
 }
 
+// 通过函数， 构建一个解析器对象
 type FuncParser struct {
 	parser ParserFunc
 	name   string
