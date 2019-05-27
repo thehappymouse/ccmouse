@@ -30,6 +30,7 @@ func (e *ConcurrentEngine) Run(seed ...Request) {
 	for i := 0; i < e.MaxWorkerCount; i++ {
 		e.createWorker(e.Scheduler.GetWorkerChan(), out, e.Scheduler)
 	}
+
 	for _, r := range seed {
 		if IsDuplicate(r.Url) {
 			continue

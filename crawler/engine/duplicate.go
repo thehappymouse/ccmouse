@@ -1,21 +1,33 @@
 package engine
 
-import "sync"
+import (
+	"github.com/rs/zerolog/log"
+	"time"
+)
 
-func init()  {
+func init() {
 
 }
-// 去重复 visitedUrls 需要存盘
-var visitedUrls = make(map[string]bool)
 
-var mu sync.Mutex
+// 去重复 visitedUrls 需要存盘
+var urlStore *Json1Store
+
 func IsDuplicate(url string) bool {
-	mu.Lock()
-	defer  mu.Unlock()
-	if visitedUrls[url] {
-		//log.Error("重重的url:%s", url)
-		return true
+	if urlStore.Get(url) == nil {
+		urlStore.Set(url, true)
+		return false
 	}
-	visitedUrls[url] = true
-	return false
+	return true
+}
+
+func init() {
+	urlStore = CreateJsonStore("urls.json")
+	// 需要清理出所有 非 html 结束的页面（可能包含更新）
+	go func() {
+		for {
+			time.Sleep(time.Second * 10)
+			gs := urlStore.WriteDisk()
+			log.Warn().Msgf("URL数据已存盘, 已访问数量[%d]", gs)
+		}
+	}()
 }
