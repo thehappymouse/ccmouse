@@ -1,9 +1,9 @@
 package client
 
 import (
-	"ccmouse/crawler/engine"
-	"ccmouse/crawler_distributed/config"
-	"ccmouse/crawler_distributed/worker"
+	"github.com/thehappymouse/ccmouse/crawler/engine"
+	"github.com/thehappymouse/ccmouse/crawler_distributed/config"
+	"github.com/thehappymouse/ccmouse/crawler_distributed/worker"
 	"net/rpc"
 )
 

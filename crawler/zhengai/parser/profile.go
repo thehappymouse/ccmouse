@@ -3,9 +3,9 @@ package parser
 // 解析会员信息
 
 import (
-	"ccmouse/crawler/engine"
+	"github.com/thehappymouse/ccmouse/crawler/engine"
 	"regexp"
-	"ccmouse/crawler/model"
+	"github.com/thehappymouse/ccmouse/crawler/model"
 	"reflect"
 )
 

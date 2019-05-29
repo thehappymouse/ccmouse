@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"ccmouse/crawler/fetcher"
+	"github.com/thehappymouse/ccmouse/crawler/fetcher"
 	"github.com/rs/zerolog/log"
 )
 

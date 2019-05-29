@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	"ccmouse/crawler-frontend/controller"
+	"github.com/thehappymouse/ccmouse/crawler-frontend/controller"
 )
 
 func main() {

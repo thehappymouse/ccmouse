@@ -3,7 +3,7 @@ package view
 import (
 	"html/template"
 	"io"
-	"ccmouse/crawler-frontend/model"
+	"github.com/thehappymouse/ccmouse/crawler-frontend/model"
 )
 
 type SearchResultView struct {

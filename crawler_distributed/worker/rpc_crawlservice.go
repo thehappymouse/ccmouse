@@ -1,6 +1,6 @@
 package worker
 
-import "ccmouse/crawler/engine"
+import "github.com/thehappymouse/ccmouse/crawler/engine"
 
 type CrawlService struct{}
 

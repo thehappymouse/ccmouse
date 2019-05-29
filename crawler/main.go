@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ccmouse/crawler/engine"
-	"ccmouse/crawler/zhengai/parser"
+	"github.com/thehappymouse/ccmouse/crawler/engine"
+	"github.com/thehappymouse/ccmouse/crawler/zhengai/parser"
 )
 
 // 单机，并发

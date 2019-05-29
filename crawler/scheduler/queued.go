@@ -1,6 +1,6 @@
 package scheduler
 
-import "ccmouse/crawler/engine"
+import "github.com/thehappymouse/ccmouse/crawler/engine"
 
 // 队列版的并发请求
 // 一个请求队列，一个工作队列。

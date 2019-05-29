@@ -1,15 +1,15 @@
 package main
 
 import (
-	"ccmouse/crawler/engine"
-	"ccmouse/crawler/scheduler"
-	"ccmouse/crawler/zhengai/parser"
-	itemsaver "ccmouse/crawler_distributed/persist/client"
-	"ccmouse/crawler_distributed/config"
-	worker "ccmouse/crawler_distributed/worker/client"
+	"github.com/thehappymouse/ccmouse/crawler/engine"
+	"github.com/thehappymouse/ccmouse/crawler/scheduler"
+	"github.com/thehappymouse/ccmouse/crawler/zhengai/parser"
+	itemsaver "github.com/thehappymouse/ccmouse/crawler_distributed/persist/client"
+	"github.com/thehappymouse/ccmouse/crawler_distributed/config"
+	worker "github.com/thehappymouse/ccmouse/crawler_distributed/worker/client"
 	"github.com/rs/zerolog/log"
 	"net/rpc"
-	"ccmouse/crawler_distributed/rpcsupport"
+	"github.com/thehappymouse/ccmouse/crawler_distributed/rpcsupport"
 	"flag"
 	"strings"
 )

@@ -2,9 +2,9 @@ package main
 
 import (
 	"testing"
-	"ccmouse/crawler_distributed/rpcsupport"
-	"ccmouse/crawler/engine"
-	"ccmouse/crawler/model"
+	"github.com/thehappymouse/ccmouse/crawler_distributed/rpcsupport"
+	"github.com/thehappymouse/ccmouse/crawler/engine"
+	"github.com/thehappymouse/ccmouse/crawler/model"
 	"time"
 )
 
