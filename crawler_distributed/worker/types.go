@@ -4,7 +4,7 @@ import (
 	"ccmouse/crawler/engine"
 	"github.com/pkg/errors"
 	"ccmouse/crawler/zhengai/parser"
-	"github.com/gpmgo/gopm/modules/log"
+	"github.com/rs/zerolog/log"
 )
 
 type SerializedParser struct {
@@ -78,7 +78,7 @@ func DeserializeResult(r ParseResult) engine.ParseResult {
 	for _, req := range r.Requests {
 		ereq, err := DeserializeRequest(req)
 		if err != nil {
-			log.Warn("error deserializing request: %v", err)
+			log.Warn().Msgf("error deserializing request: %v", err)
 			continue
 		}
 		result.Requests = append(result.Requests, ereq)

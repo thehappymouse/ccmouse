@@ -7,9 +7,9 @@ import (
 	itemsaver "ccmouse/crawler_distributed/persist/client"
 	"ccmouse/crawler_distributed/config"
 	worker "ccmouse/crawler_distributed/worker/client"
+	"github.com/rs/zerolog/log"
 	"net/rpc"
 	"ccmouse/crawler_distributed/rpcsupport"
-	"github.com/gpmgo/gopm/modules/log"
 	"flag"
 	"strings"
 )
@@ -19,10 +19,11 @@ func createClientPool(hosts []string) chan *rpc.Client {
 	for _, h := range hosts {
 		client, err := rpcsupport.NewClient(h)
 		if err != nil {
-			log.Warn("error connection to %s : %s", h, err)
+			log.Warn().Msgf("error connection to %s : %s", h, err)
+
 		} else {
 			clients = append(clients, client)
-			log.Warn("connected  to %s", h)
+			log.Warn().Msgf("connected  to %s", h)
 		}
 	}
 	out := make(chan *rpc.Client)
@@ -45,7 +46,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	log.Warn("connected item saver at : %v", config.ItemSaverPort)
+
+	log.Warn().Msgf("connected item saver at : %v", config.ItemSaverPort)
 
 	pool := createClientPool(strings.Split(*hosts, ","))
 
