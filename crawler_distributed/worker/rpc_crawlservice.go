@@ -1,6 +1,6 @@
 package worker
 
-import "dali.cc/ccmouse/crawler/engine"
+import "ccmouse/crawler/engine"
 
 type CrawlService struct{}
 

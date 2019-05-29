@@ -2,7 +2,7 @@ package persist
 
 import (
 	"context"
-	"dali.cc/ccmouse/crawler/engine"
+	"ccmouse/crawler/engine"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/olivere/elastic.v5"

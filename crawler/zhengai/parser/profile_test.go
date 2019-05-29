@@ -3,8 +3,8 @@ package parser
 import (
 	"testing"
 	"io/ioutil"
-	"dali.cc/ccmouse/crawler/model"
-	"dali.cc/ccmouse/crawler/engine"
+	"ccmouse/crawler/model"
+	"ccmouse/crawler/engine"
 )
 
 func TestParseProfile(t *testing.T) {

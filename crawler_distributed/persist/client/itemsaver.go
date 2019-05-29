@@ -2,8 +2,8 @@ package client
 
 import (
 	"log"
-	"dali.cc/ccmouse/crawler/engine"
-	"dali.cc/ccmouse/crawler_distributed/rpcsupport"
+	"ccmouse/crawler/engine"
+	"ccmouse/crawler_distributed/rpcsupport"
 )
 // json rpc client
 // 给客户端使用的代码 将数据通过 rpc 传送至 rpc-server

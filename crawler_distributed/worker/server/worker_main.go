@@ -2,10 +2,10 @@ package main
 
 import (
 	"log"
-	"dali.cc/ccmouse/crawler_distributed/rpcsupport"
+	"ccmouse/crawler_distributed/rpcsupport"
 	"fmt"
-	"dali.cc/ccmouse/crawler_distributed/config"
-	"dali.cc/ccmouse/crawler_distributed/worker"
+	"ccmouse/crawler_distributed/config"
+	"ccmouse/crawler_distributed/worker"
 	"flag"
 )
 

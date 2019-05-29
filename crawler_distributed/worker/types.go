@@ -1,9 +1,9 @@
 package worker
 
 import (
-	"dali.cc/ccmouse/crawler/engine"
+	"ccmouse/crawler/engine"
 	"github.com/pkg/errors"
-	"dali.cc/ccmouse/crawler/zhengai/parser"
+	"ccmouse/crawler/zhengai/parser"
 	"github.com/gpmgo/gopm/modules/log"
 )
 

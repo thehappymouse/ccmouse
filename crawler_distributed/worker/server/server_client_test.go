@@ -2,10 +2,10 @@ package main
 
 import (
 	"testing"
-	"dali.cc/ccmouse/crawler_distributed/rpcsupport"
-	"dali.cc/ccmouse/crawler_distributed/worker"
+	"ccmouse/crawler_distributed/rpcsupport"
+	"ccmouse/crawler_distributed/worker"
 	"time"
-	"dali.cc/ccmouse/crawler_distributed/config"
+	"ccmouse/crawler_distributed/config"
 	"fmt"
 )
 

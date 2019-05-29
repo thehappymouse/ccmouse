@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	"dali.cc/ccmouse/crawler-frontend/controller"
+	"ccmouse/crawler-frontend/controller"
 )
 
 func main() {

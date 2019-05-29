@@ -9,11 +9,11 @@ import (
 	"reflect"
 
 	"regexp"
-	"dali.cc/ccmouse/crawler-frontend/view"
+	"ccmouse/crawler-frontend/view"
 	"gopkg.in/olivere/elastic.v5"
-	"dali.cc/ccmouse/crawler-frontend/model"
-	"dali.cc/ccmouse/crawler_distributed/config"
-	"dali.cc/ccmouse/crawler/engine"
+	"ccmouse/crawler-frontend/model"
+	"ccmouse/crawler_distributed/config"
+	"ccmouse/crawler/engine"
 )
 
 type SearchResultHandler struct {

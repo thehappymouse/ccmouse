@@ -1,9 +1,9 @@
 package persist
 
 import (
-	"dali.cc/ccmouse/crawler/engine"
+	"ccmouse/crawler/engine"
 	"gopkg.in/olivere/elastic.v5"
-	"dali.cc/ccmouse/crawler/persist"
+	"ccmouse/crawler/persist"
 	"log"
 )
 

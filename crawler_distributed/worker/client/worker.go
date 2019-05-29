@@ -1,9 +1,9 @@
 package client
 
 import (
-	"dali.cc/ccmouse/crawler/engine"
-	"dali.cc/ccmouse/crawler_distributed/config"
-	"dali.cc/ccmouse/crawler_distributed/worker"
+	"ccmouse/crawler/engine"
+	"ccmouse/crawler_distributed/config"
+	"ccmouse/crawler_distributed/worker"
 	"net/rpc"
 )
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"dali.cc/ccmouse/crawler/engine"
-	"dali.cc/ccmouse/crawler/zhengai/parser"
+	"ccmouse/crawler/engine"
+	"ccmouse/crawler/zhengai/parser"
 )
 
 // 单机，并发

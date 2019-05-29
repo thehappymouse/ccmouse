@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"dali.cc/utils"
+	"utils"
 	"encoding/json"
 	"io/ioutil"
 	"sync"

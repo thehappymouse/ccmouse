@@ -1,14 +1,14 @@
 package main
 
 import (
-	"dali.cc/ccmouse/crawler/engine"
-	"dali.cc/ccmouse/crawler/scheduler"
-	"dali.cc/ccmouse/crawler/zhengai/parser"
-	itemsaver "dali.cc/ccmouse/crawler_distributed/persist/client"
-	"dali.cc/ccmouse/crawler_distributed/config"
-	worker "dali.cc/ccmouse/crawler_distributed/worker/client"
+	"ccmouse/crawler/engine"
+	"ccmouse/crawler/scheduler"
+	"ccmouse/crawler/zhengai/parser"
+	itemsaver "ccmouse/crawler_distributed/persist/client"
+	"ccmouse/crawler_distributed/config"
+	worker "ccmouse/crawler_distributed/worker/client"
 	"net/rpc"
-	"dali.cc/ccmouse/crawler_distributed/rpcsupport"
+	"ccmouse/crawler_distributed/rpcsupport"
 	"github.com/gpmgo/gopm/modules/log"
 	"flag"
 	"strings"
