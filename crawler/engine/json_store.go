@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"utils"
+	"github.com/thehappymouse/go-utils"
 	"encoding/json"
 	"io/ioutil"
 	"sync"
