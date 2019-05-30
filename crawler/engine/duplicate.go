@@ -1,17 +1,35 @@
 package engine
 
-// 去重复 visitedUrls 需要存盘
-var urlStore = &JsonStore{}
+type DuplicateChecker interface {
+	IsDuplicate(url string) bool
+}
 
-func IsDuplicate(url string) bool {
-	if urlStore.Get(url) == nil {
-		urlStore.Set(url, true)
+type FileDuplicateChecker struct {
+	urlStore *JsonStore
+}
+
+func (t *FileDuplicateChecker) IsDuplicate(url string) bool {
+	if t.urlStore.Get(url) == nil {
+		t.urlStore.Set(url, true)
 		return false
 	}
 	return true
 }
 
+var urlChecker DuplicateChecker
+
+func IsDuplicate(url string) bool {
+
+	return urlChecker.IsDuplicate(url)
+}
+
+func SetDuplicateChecker(c DuplicateChecker)  {
+	urlChecker = c
+}
+
 // 设置重复的store
 func SetDuplicateStore(s *JsonStore) {
-	urlStore = s
+	urlChecker = &FileDuplicateChecker{
+		urlStore: s,
+	}
 }

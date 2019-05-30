@@ -3,6 +3,7 @@ module github.com/thehappymouse/ccmouse
 go 1.12
 
 require (
+	github.com/go-redis/redis v6.15.2+incompatible // indirect
 	github.com/magiconair/properties v1.8.1
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.14.3
