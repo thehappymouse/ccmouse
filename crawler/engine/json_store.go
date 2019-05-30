@@ -16,9 +16,9 @@ type JsonStore struct {
 }
 
 func (t *JsonStore) Set(key string, g interface{}) bool {
-	t.once.Do(func() {
-		t.LoadDisk()
-	})
+	//t.once.Do(func() {
+	//	t.LoadDisk()
+	//})
 	t.Lock()
 	defer t.Unlock()
 	t.source[key] = g
