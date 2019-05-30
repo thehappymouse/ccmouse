@@ -8,14 +8,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type Json1Store struct {
+type JsonStore struct {
 	source   map[string]interface{}
 	JsonPath string
 	once     sync.Once
 	sync.RWMutex
 }
 
-func (t *Json1Store) Set(key string, g interface{}) bool {
+func (t *JsonStore) Set(key string, g interface{}) bool {
 	t.once.Do(func() {
 		t.LoadDisk()
 	})
@@ -25,7 +25,7 @@ func (t *Json1Store) Set(key string, g interface{}) bool {
 	return true
 }
 
-func (t *Json1Store) Get(id string) interface{} {
+func (t *JsonStore) Get(id string) interface{} {
 	t.RLock()
 	defer t.RUnlock()
 
@@ -37,7 +37,7 @@ func (t *Json1Store) Get(id string) interface{} {
 }
 
 // 写盘
-func (t *Json1Store) WriteDisk() int {
+func (t *JsonStore) WriteDisk() int {
 	t.Lock()
 	defer t.Unlock()
 	bytes, err := json.MarshalIndent(t.source, "  ", "  ")
@@ -47,7 +47,7 @@ func (t *Json1Store) WriteDisk() int {
 }
 
 // 读盘
-func (t *Json1Store) LoadDisk() bool {
+func (t *JsonStore) LoadDisk() bool {
 	t.Lock()
 	defer t.Unlock()
 	bytes, err := ioutil.ReadFile(t.JsonPath)
@@ -60,8 +60,8 @@ func (t *Json1Store) LoadDisk() bool {
 	return true
 }
 
-func CreateJsonStore(jsonPath string) *Json1Store {
-	t := Json1Store{JsonPath: jsonPath}
+func CreateJsonStore(jsonPath string) *JsonStore {
+	t := JsonStore{JsonPath: jsonPath}
 	t.LoadDisk()
 	return &t
 }

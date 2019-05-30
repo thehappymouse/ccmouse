@@ -3,7 +3,7 @@ module github.com/thehappymouse/ccmouse
 go 1.12
 
 require (
-	github.com/magiconair/properties v1.8.1 // indirect
+	github.com/magiconair/properties v1.8.1
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.14.3
 	github.com/thehappymouse/go-utils v0.0.2

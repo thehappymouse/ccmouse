@@ -10,7 +10,7 @@ func init() {
 }
 
 // 去重复 visitedUrls 需要存盘
-var urlStore *Json1Store
+var urlStore *JsonStore
 
 func IsDuplicate(url string) bool {
 	if urlStore.Get(url) == nil {
@@ -20,7 +20,7 @@ func IsDuplicate(url string) bool {
 	return true
 }
 
-func init() {
+func InitDuplicateStore() {
 	urlStore = CreateJsonStore("urls.json")
 	// 需要清理出所有 非 html 结束的页面（可能包含更新）
 	go func() {
